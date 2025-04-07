@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Manager Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #23272a;
+            color: white;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 70px;
+            background: #2c2f33;
+            padding: 20px 0;
+            position: fixed;
+            height: 100%;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+        .sidebar ul li {
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        .sidebar ul li:hover {
+            background: #40444b;
+        }
+        .members-panel {
+            width: 250px;
+            background: #2c2f33;
+            padding: 20px;
+            display: none;
+            flex-direction: column;
+            height: 85vh;
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            border-radius: 10px 0 0 10px;
+        }
+        .members-panel h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .members-panel ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        .members-panel ul li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .members-panel ul li:hover {
+            background: #40444b;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            margin-left: 70px;
+            transition: margin-right 0.3s;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1d20;
+            padding: 15px;
+            border-radius: 5px;
+            position: fixed;
+            top: 0;
+            left: 90px;
+            right: 0;
+            z-index: 1000;
+        }
+        .header .actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header .actions input {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+        .header .actions button {
+            background: #7289da;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .header .actions button:hover {
+            background: #5b6eae;
+        }
+        .dashboard-section {
+            margin-top: 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .dashboard-box {
+            background: #2c2f33;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .notification {
+            position: relative;
+            cursor: pointer;
+        }
+        .notification span {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 3px 6px;
+            border-radius: 50%;
+        }
+        #members-btn {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <ul>
+            <li onclick="loadContent('dashboard')" title="Dashboard">📊</li>
+            <li onclick="loadContent('events')" title="Events">📅</li>
+            <li onclick="loadContent('announcements')" title="Announcements">📢</li>
+            <li onclick="loadContent('transactions')" title="Transactions">💰</li>
+        </ul>
+    </div>
+    <div class="members-panel" id="members-panel">
+        <h3>Org Members</h3>
+        <ul>
+            <li>John Doe</li>
+            <li>Jane Smith</li>
+            <li>Robert Brown</li>
+            <li>Emily Davis</li>
+        </ul>
+    </div>
+    <div class="main-content" id="main-content">
+        <div class="header">
+            <h2 id="page-title">Dashboard</h2>
+            <div class="actions">
+                <input type="text" placeholder="Search...">
+                <div title="Members" id="members-btn">👥</div>
+                <div class="notification">🔔 <span id="notif-count">3</span></div>
+                <button onclick="logout()">Logout</button>
+            </div>
+        </div>
+        <div id="content" class="dashboard-section">
+            <div class="dashboard-box"><h3>Upcoming Events</h3><p>No upcoming events.</p></div>
+            <div class="dashboard-box"><h3>Latest Announcements</h3><p>No new announcements.</p></div>
+            <div class="dashboard-box"><h3>Quick Actions</h3><button>Join an Event</button> <button>View Announcements</button></div>
+        </div>
+    </div>
+    <script>
+        function logout() {
+            alert("Logging out...");
+        }
+        document.getElementById("members-btn").addEventListener("click", function() {
+            let membersPanel = document.getElementById("members-panel");
+            let mainContent = document.getElementById("main-content");
+            
+            if (membersPanel.style.display === "none" || membersPanel.style.display === "") {
+                membersPanel.style.display = "flex";
+                mainContent.style.marginRight = "250px";
+            } else {
+                membersPanel.style.display = "none";
+                mainContent.style.marginRight = "0";
+            }
+        });
+
+        function loadContent(section) {
+            let content = document.getElementById("content");
+            let title = document.getElementById("page-title");
+            
+            if (section === "announcements") {
+                title.innerText = "Announcements";
+                content.innerHTML = "<div class='dashboard-box'><h3>Announcements</h3><p>Here are the latest announcements...</p></div>";
+            }
+        }
+    </script>
+</body>
+</html>

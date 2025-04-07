@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Club Manager{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #ffffff;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #1e1e2f;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+        }
+        .sidebar a {
+            text-decoration: none;
+            color: #fff;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+            font-size: 1rem;
+        }
+        .sidebar a i {
+            margin-right: 10px;
+        }
+        .sidebar a:hover {
+            background-color: #3a3a5f;
+        }
+        .sidebar a.active {
+            background-color: #4a4a6f;
+        }
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .top-bar {
+            background-color: #29293d;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .top-bar h1 {
+            font-size: 1.5rem;
+            color: #4a90e2;
+        }
+        .top-bar .icons {
+            display: flex;
+            align-items: center;
+        }
+        .notif-bell {
+            position: relative;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            color: white;
+            cursor: pointer;
+        }
+        .notif-bell .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 50%;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #2a2a3d;
+            padding: 20px;
+            border-radius: 10px;
+            width: 600px;  /* Bigger modal */
+            max-height: 75vh; /* Prevent overflow */
+            overflow-y: auto;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        .modal h2 {
+            margin-bottom: 15px;
+            color: #4a90e2;
+        }
+        .modal table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        .modal th, .modal td {
+            padding: 10px;
+            border-bottom: 1px solid #444;
+        }
+        .modal th {
+            background-color: #444;
+        }
+        .no-pending {
+            color: #bbb;
+            font-style: italic;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+        .btn-approve {
+            background: green;
+            color: white;
+        }
+        .btn-reject {
+            background: red;
+            color: white;
+        }
+        .btn-close {
+            background: gray;
+            color: white;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Club Manager</h2>
+        <a href="/dashboard">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+        </a>
+        <a href="/members">
+            <i class="fa-solid fa-users"></i> Members
+        </a>
+        <a href="/announcements">
+            <i class="fa-solid fa-calendar"></i> Announcement
+        </a>
+        <a href="/finances">
+            <i class="fa-solid fa-wallet"></i> Finances
+        </a>
+        <a href="/logout">
+            <i class="fa-solid fa-sign-out-alt"></i> Logout
+        </a>
+    </div>
+    <div class="main-content">
+        <div class="top-bar">
+            <h1>{% block page_title %}Club Management{% endblock %}</h1>
+            <div class="icons">
+                <div class="notif-bell" onclick="toggleModal()">
+                    <i class="fa-solid fa-bell"></i>
+                    {% if pending_count and pending_count > 0 %}
+                        <span class="badge">{{ pending_count }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="pendingModal">
+        <div class="modal-content">
+            <h2>Pending Member Requests</h2>
+            <div class="modal-body">
+                {% if pending_members %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Full Name</th>
+                                <th>Course</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in pending_members %}
+                            <tr id="member-{{ member.id }}">
+                                <td>{{ member.student_id }}</td>
+                                <td>{{ member.name }}</td>
+                                <td>{{ member.course }}</td>
+                                <td>
+                                    <button class="btn btn-approve" onclick="handleMemberAction({{ member.id }}, 'approve')">✅ Approve</button>
+                                    <button class="btn btn-reject" onclick="handleMemberAction({{ member.id }}, 'reject')">❌ Reject</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="no-pending">No pending requests.</p>
+                {% endif %}
+            </div>
+            <button class="btn btn-close" onclick="toggleModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleModal() {
+            var modal = document.getElementById("pendingModal");
+            modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
+        }
+
+        function handleMemberAction(memberId, action) {
+            fetch(`/${action}/${memberId}`, { method: "POST" })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove the member row from the table
+                    document.getElementById(`member-${memberId}`).remove();
+
+                    // Update the notification badge
+                    let badge = document.querySelector(".notif-bell .badge");
+                    if (data.pending_count > 0) {
+                        badge.textContent = data.pending_count;
+                    } else {
+                        badge.remove();
+                    }
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Dashboard | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid custom-container" style="position: absolute; width: 100%;">
+    <!-- Dashboard Welcome Message -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card border-light shadow-sm p-4 bg-white">
+                <h2 class="text-dark">Welcome to the Admin Dashboard</h2>
+                <p class="lead text-muted">Manage organizations, assign officers, and view key statistics. Use the sections below to get started.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Organization & Assign Officer (Two-column layout) -->
+    <div class="row mb-4">
+        <!-- Create Organization -->
+        <div class="col-md-6 mb-3">
+            <div class="card border-secondary shadow-sm bg-white">
+                <div class="card-header bg-light text-dark">
+                    <h5>Create a New Organization</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="#">
+                        <div class="mb-3">
+                            <label for="org_name" class="form-label text-dark">Organization Name</label>
+                            <input type="text" class="form-control" id="org_name" name="org_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="org_abbv" class="form-label text-dark">Organization Abbv</label>
+                            <input type="text" class="form-control" id="org_abbv" name="org_abbv" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="org_description" class="form-label text-dark">Organization Description</label>
+                            <textarea class="form-control" id="org_description" name="org_description" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-dark">Create Organization</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assign Officer -->
+        <div class="col-md-6 mb-3">
+            <div class="card border-secondary shadow-sm bg-white">
+                <div class="card-header bg-light text-dark">
+                    <h5>Assign Officers to Organization</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="#">
+                        <div class="mb-3">
+                            <label for="organization" class="form-label text-dark">Select Organization</label>
+                            <select class="form-control" id="organization" name="organization" required>
+                                <option value="">-- Select Organization --</option>
+                                <option value="org_1">Organization 1</option>
+                                <option value="org_2">Organization 2</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="officer" class="form-label text-dark">Select Officer</label>
+                            <select class="form-control" id="officer" name="officer" required>
+                                <option value="">-- Select Officer --</option>
+                                <option value="officer_1">Officer 1</option>
+                                <option value="officer_2">Officer 2</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-dark">Assign Officer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Section (Three-column layout) -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-light shadow-sm bg-white">
+                <div class="card-header bg-light text-dark">
+                    <h5>Organizations Created</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="text-dark">15</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-light shadow-sm bg-white">
+                <div class="card-header bg-light text-dark">
+                    <h5>Officers Assigned</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="text-dark">25</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-light shadow-sm bg-white">
+                <div class="card-header bg-light text-dark">
+                    <h5>Pending Actions</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="text-dark">7</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

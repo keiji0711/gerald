@@ -1,0 +1,175 @@
+{% extends "officers/base.html" %}
+
+{% block title %}Announcements | Club Manager{% endblock %}
+
+{% block styles %}
+<style>
+    .announcement-card {
+        background: #1e1e2f;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        transition: transform 0.2s ease-in-out;
+        position: relative;
+    }
+    .announcement-card:hover {
+        transform: translateY(-5px);
+    }
+    .status {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 12px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+    .status.important { background-color: #e74c3c; color: white; }
+    .status.general { background-color: #3498db; color: white; }
+    .status.reminder { background-color: #f39c12; color: white; }
+
+    .form-control, select {
+        background-color: #1e1e2f;
+        border: 1px solid #555;
+        color: white;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+
+    .form-control:focus, select:focus {
+        border-color: #3498db;
+        box-shadow: none;
+    }
+
+    .form-label {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #ccc;
+        margin-bottom: 5px;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        border-color: #3498db;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+        border-color: #2980b9;
+    }
+
+    .btn-secondary {
+        background-color: #7f8c8d;
+        border-color: #7f8c8d;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+        background-color: #95a5a6;
+        border-color: #95a5a6;
+    }
+
+    /* Make the container full width */
+    .container-fluid {
+        padding: 20px;
+    }
+
+    /* Ensure the columns are spacious */
+    .announcement-card-container {
+        margin-bottom: 20px;
+    }
+
+    .section-header {
+        margin-bottom: 30px;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    /* Extra padding for the sides */
+    .row {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+
+    .col-md-4 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4"><i class="fa-solid fa-bullhorn"></i> Announcements</h2>
+    
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <h4>Add New Announcement</h4>
+            <form method="POST" action="{{ url_for('officers.create_announcement') }}">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="details" class="form-label">Details</label>
+                    <textarea class="form-control" id="details" name="details" rows="4" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="type" class="form-label">Announcement Type</label>
+                    <select class="form-control" id="type" name="type" required>
+                        <option value="General">General</option>
+                        <option value="Important">Important</option>
+                        <option value="Reminder">Reminder</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Announcement</button>
+            </form>
+        </div>
+
+        <div class="col-md-12">
+            <h4>Recent Announcements</h4>
+            <div class="row">
+                {% for announcement in announcements %}
+                <div class="col-md-4">
+                    <div class="announcement-card p-3 mb-3">
+                        <span class="status {{ announcement.type.lower() }}">{{ announcement.type }}</span>
+                        <h5><i class="fa-solid fa-bullhorn"></i> {{ announcement.title }}</h5>
+                        <p><i class="fa-solid fa-calendar"></i> {{ announcement.date }}</p>
+                        <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#announcementDetails{{ announcement.id }}">
+                            <i class="fa-solid fa-eye"></i> View
+                        </button>
+                        <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+                
+                <!-- View Announcement Modal -->
+                <div class="modal fade" id="announcementDetails{{ announcement.id }}" tabindex="-1" aria-labelledby="announcementDetailsLabel{{ announcement.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="announcementDetailsLabel{{ announcement.id }}"><i class="fa-solid fa-info-circle"></i> Announcement Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Title:</strong> {{ announcement.title }}</p>
+                                <p><strong>Date:</strong> {{ announcement.date }}</p>
+                                <p><strong>Details:</strong> {{ announcement.details }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

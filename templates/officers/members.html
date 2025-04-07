@@ -1,0 +1,160 @@
+{% extends "officers/base.html" %}
+
+{% block title %}Members - Club Manager{% endblock %}
+
+{% block styles %}
+<style>
+    .members-container {
+        background: #1e1e2f;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+    }
+    .members-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .members-header h2 {
+        color: #4a90e2;
+        font-size: 1.5rem;
+    }
+    .search-bar {
+        padding: 8px 12px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        background: #29293d;
+        color: #fff;
+        width: 250px;
+    }
+    .members-list {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .members-list th, .members-list td {
+        padding: 12px;
+        text-align: left;
+    }
+    .members-list th {
+        background: #29293d;
+        color: #4a90e2;
+    }
+    .members-list td {
+        background: #232333;
+        color: #fff;
+    }
+    .member-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+    .member-info {
+        display: flex;
+        align-items: center;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    .edit-btn, .delete-btn {
+        padding: 6px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background 0.3s ease;
+    }
+    .edit-btn {
+        background: #4a90e2;
+        color: #fff;
+    }
+    .edit-btn:hover {
+        background: #357ac7;
+    }
+    .delete-btn {
+        background: #e74c3c;
+        color: #fff;
+    }
+    .delete-btn:hover {
+        background: #c0392b;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Members</h1>
+<p>Manage all members of the club.</p>
+
+<div class="members-container">
+    <div class="members-header">
+        <h2>Member List</h2>
+        <input type="text" class="search-bar" placeholder="Search members...">
+    </div>
+
+    <table class="members-list">
+        <thead>
+            <tr>
+                <th>Avatar</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="member-info">
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="member-avatar">
+                        John Doe
+                    </div>
+                </td>
+                <td>John Doe</td>
+                <td>johndoe@example.com</td>
+                <td>President</td>
+                <td class="action-buttons">
+                    <button class="edit-btn"><i class="fa-solid fa-pen"></i> Edit</button>
+                    <button class="delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="member-info">
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="member-avatar">
+                        Jane Smith
+                    </div>
+                </td>
+                <td>Jane Smith</td>
+                <td>janesmith@example.com</td>
+                <td>Vice President</td>
+                <td class="action-buttons">
+                    <button class="edit-btn"><i class="fa-solid fa-pen"></i> Edit</button>
+                    <button class="delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="member-info">
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="member-avatar">
+                        Michael Johnson
+                    </div>
+                </td>
+                <td>Michael Johnson</td>
+                <td>michael@example.com</td>
+                <td>Secretary</td>
+                <td class="action-buttons">
+                    <button class="edit-btn"><i class="fa-solid fa-pen"></i> Edit</button>
+                    <button class="delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

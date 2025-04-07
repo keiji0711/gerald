@@ -1,0 +1,50 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block title %}Officers List | Club Manager{% endblock %}
+
+{% block content %}
+<div class="container mt-4" style="position: absolute; width: 1005;">
+    <h2 class="text-center mb-4">List of Officers</h2>
+    
+    <!-- Table to display officers -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Organization</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for officer in officers %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ officer.name }}</td>
+                        <td>{{ officer.email }}</td>
+                        <td>{{ officer.organization_name }}</td>
+                        <td>{{ officer.role }}</td>
+                        <td>
+                            <a href="/admin/edit-officer/{{ officer.id }}" class="btn btn-warning btn-sm">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <a href="/admin/delete-officer/{{ officer.id }}" class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">No officers found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

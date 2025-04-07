@@ -1,0 +1,47 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Archived Organizations | Club Manager{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h2 class="text-center mb-4">Archived Organizations</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Organization Name</th>
+                        <th scope="col">Abbreviation</th>
+                        <th scope="col">Date Archived</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for org in archived_organizations %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ org.name }}</td>
+                        <td>{{ org.abbreviation }}</td>
+                        <td>{{ org.date_archived.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            <a href="/admin/restore-organization/{{ org.id }}" class="btn btn-success btn-sm">
+                                <i class="fa fa-undo"></i> Restore
+                            </a>
+                            <a href="/admin/delete-organization/{{ org.id }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure? This action is irreversible.')">
+                                <i class="fa fa-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">No archived organizations found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

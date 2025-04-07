@@ -1,0 +1,42 @@
+WhatWeb report for http://192.168.16.1
+Status    : 404 Not Found
+Title     : 404 Not Found
+IP        : 192.168.16.1
+Country   : RESERVED, ZZ
+
+Summary   : HTML5, HTTPServer[Werkzeug/3.1.3 Python/3.12.3], Python[3.12.3], Werkzeug[3.1.3]
+
+Detected Plugins:
+[ HTML5 ]
+	HTML version 5, detected by the doctype declaration 
+
+
+[ HTTPServer ]
+	HTTP server header string. This plugin also attempts to 
+	identify the operating system from the server header. 
+
+	String       : Werkzeug/3.1.3 Python/3.12.3 (from server string)
+
+[ Python ]
+	Python is a programming language that lets you work more 
+	quickly and integrate your systems more effectively. You 
+	can learn to use Python and see almost immediate gains in 
+	productivity and lower maintenance costs. 
+
+	Version      : 3.12.3
+	Website     : http://www.python.org/
+
+[ Werkzeug ]
+	Werkzeug is a WSGI utility library for Python. 
+
+	Version      : 3.1.3
+	Website     : http://werkzeug.pocoo.org/
+
+HTTP Headers:
+	HTTP/1.1 404 NOT FOUND
+	Server: Werkzeug/3.1.3 Python/3.12.3
+	Date: Mon, 31 Mar 2025 14:14:58 GMT
+	Content-Type: text/html; charset=utf-8
+	Content-Length: 207
+	Connection: close
+	

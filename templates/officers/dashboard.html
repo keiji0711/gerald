@@ -1,0 +1,125 @@
+{% extends "officers/base.html" %}
+
+{% block title %}Dashboard - Club Manager{% endblock %}
+
+{% block styles %}
+<style>
+    .dashboard-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .card {
+        background: linear-gradient(135deg, #1e1e2f, #29293d);
+        padding: 1.8rem;
+        border-radius: 12px;
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 2px 6px 15px rgba(0, 0, 0, 0.4);
+    }
+    .card i {
+        font-size: 2.2rem;
+        color: #4a90e2;
+    }
+    .card h3 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+    .card p {
+        margin: 0;
+        font-size: 1rem;
+        color: #bbb;
+    }
+
+    .recent-activities {
+        margin-top: 40px;
+        padding: 20px;
+        background: #1e1e2f;
+        border-radius: 10px;
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .recent-activities h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #4a90e2;
+    }
+    .activity-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .activity-list li {
+        background-color: #29293d;
+        padding: 12px;
+        margin-bottom: 8px;
+        border-radius: 5px;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: background 0.3s ease;
+    }
+    .activity-list li:hover {
+        background-color: #4a90e2;
+    }
+    .activity-list li i {
+        color: #4a90e2;
+        font-size: 1.2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<p>Welcome back, Admin! Here's an overview of your club.</p>
+
+<div class="dashboard-container">
+    <div class="card">
+        <i class="fa-solid fa-users"></i>
+        <div>
+            <h3>150</h3>
+            <p>Members</p>
+        </div>
+    </div>
+    <div class="card">
+        <i class="fa-solid fa-calendar-check"></i>
+        <div>
+            <h3>5</h3>
+            <p>Upcoming Events</p>
+        </div>
+    </div>
+    <div class="card">
+        <i class="fa-solid fa-wallet"></i>
+        <div>
+            <h3>$2,500</h3>
+            <p>Club Funds</p>
+        </div>
+    </div>
+    <div class="card">
+        <i class="fa-solid fa-bullhorn"></i>
+        <div>
+            <h3>3</h3>
+            <p>New Announcements</p>
+        </div>
+    </div>
+</div>
+
+<div class="recent-activities">
+    <h2>Recent Activities</h2>
+    <ul class="activity-list">
+        <li><i class="fa-solid fa-user-plus"></i> John Doe joined the club.</li>
+        <li><i class="fa-solid fa-calendar-day"></i> New event scheduled: Club Meetup on April 10.</li>
+        <li><i class="fa-solid fa-money-bill"></i> Membership fees collected from 20 members.</li>
+        <li><i class="fa-solid fa-bullhorn"></i> Announcement posted: "Meeting on Friday!"</li>
+    </ul>
+</div>
+{% endblock %}

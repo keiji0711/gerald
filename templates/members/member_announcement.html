@@ -1,0 +1,61 @@
+{% extends "members/member_base.html" %}
+
+{% block title %}Announcements | Club Manager{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">📢 Latest Announcements</h2>
+        <p class="text-muted">Stay updated with the latest club news and events.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-10"> <!-- Wider container -->
+            <!-- Scrollable container -->
+            <div class="list-group shadow-lg rounded overflow-auto p-4" 
+                style="max-height: 500px; overflow-y: auto; border: 1px solid #ccc; background: #fff;">
+                
+                {% set announcements = [
+                    {"id": 1, "title": "Club Meeting on Friday", "date": "2025-03-29", "content": "We will be having a general club meeting this Friday at 5:00 PM in Room 101. Attendance is required."},
+                    {"id": 2, "title": "New Club Event: Tech Workshop", "date": "2025-04-05", "content": "Join us for an exclusive Tech Workshop on web development and AI. Register now to secure your spot!"},
+                    {"id": 3, "title": "Volunteer Opportunity", "date": "2025-04-10", "content": "We need volunteers for our upcoming outreach program. Sign up at the club office if you're interested."}
+                ] %}
+                
+                {% for announcement in announcements %}
+                <div class="list-group-item border rounded mb-3 p-3" style="background: #f8f9fa; cursor: pointer;" onclick="toggleAnnouncement('{{ announcement.id }}')">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0 fw-bold"><i class="fas fa-envelope"></i> {{ announcement.title }}</h6>
+                        <small class="text-muted"><i class="fa fa-clock"></i> {{ announcement.date }}</small>
+                    </div>
+                    <p class="text-muted mb-1 preview-text" id="preview-{{ announcement.id }}">{{ announcement.content[:50] }}...</p>
+                    <div class="announcement-content text-dark" id="announcement-{{ announcement.id }}" style="display: none;">
+                        <p class="mt-2">{{ announcement.content }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <div class="alert alert-light border text-center shadow-sm">
+                    <i class="fas fa-info-circle"></i> No more announcements available.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function toggleAnnouncement(id) {
+        let content = document.getElementById('announcement-' + id);
+        let preview = document.getElementById('preview-' + id);
+        
+        if (content.style.display === 'none' || content.style.display === '') {
+            content.style.display = 'block';
+            preview.style.display = 'none';
+        } else {
+            content.style.display = 'none';
+            preview.style.display = 'block';
+        }
+    }
+</script>
+{% endblock %}
